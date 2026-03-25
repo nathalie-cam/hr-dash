@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cambio AI — People Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f3ee;--surface:#ffffff;--surface2:#f0ede6;--border:#e2ddd6;
+  --text:#1a1714;--muted:#8a8278;
+  --accent:#c85a2a;--accent-lt:#f5e9e3;
+  --teal:#2a7c6f;--gold:#b8860b;--blue:#2a4a8c;--purple:#6b3fa0;
+  --c-asian:#2a7c6f;--c-black:#c85a2a;--c-hisp:#b8860b;--c-mixed:#6b3fa0;--c-white:#8a8278;
+  --c-male:#2a4a8c;--c-female:#c85a2a;
+  --t1:#e85d42;--t2:#e8a642;--t3:#42a8e8;--t4:#2a7c6f;
+}
+body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;font-size:13px;line-height:1.5}
+.shell{max-width:1380px;margin:0 auto;padding:32px 28px 80px}
+.hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid var(--text)}
+.hdr-title{font-family:'Instrument Serif',serif;font-size:50px;font-style:italic;line-height:1;letter-spacing:-1px}
+.hdr-title span{color:var(--accent)}
+.hdr-sub{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-top:4px}
+.hdr-meta{text-align:right;font-size:11px;color:var(--muted)}
+.hdr-count{font-family:'Instrument Serif',serif;font-size:36px;font-style:italic;color:var(--text);line-height:1}
+.live{color:var(--accent);font-weight:600}
+.banner{border-radius:10px;padding:12px 18px;font-size:11.5px;line-height:1.6;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start}
+.banner.good{background:#e3f0ee;border:1px solid #b0d6d1;color:var(--teal)}
+.banner.warn{background:#f7f0dc;border:1px solid #d4c07a;color:var(--gold)}
+.banner-icon{font-size:16px;flex-shrink:0}
+.filter-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+.filter-group{display:flex;flex-direction:column;gap:5px}
+.filter-group label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.filter-group select{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:7px 28px 7px 10px;font-family:'Geist Mono',monospace;font-size:12px;color:var(--text);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8278'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:145px;transition:border-color .15s}
+.filter-group select:focus{outline:none;border-color:var(--accent)}
+.filter-reset{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-family:'Geist Mono',monospace;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;align-self:flex-end;transition:opacity .15s}
+.filter-reset:hover{opacity:.85}
+.filter-active{align-self:flex-end;font-size:11px;color:var(--accent);font-weight:600;padding-bottom:8px}
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 16px 14px;position:relative;overflow:hidden;transition:transform .15s,border-color .15s}
+.kpi:hover{transform:translateY(-2px);border-color:var(--accent)}
+.kpi-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--kpi-color,var(--accent))}
+.kpi-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:40px;font-style:italic;line-height:1;color:var(--text)}
+.kpi-detail{margin-top:4px;font-size:10.5px;color:var(--muted)}
+.kpi-detail b{color:var(--kpi-color,var(--accent))}
+.row{display:grid;gap:14px;margin-bottom:14px}
+.r2{grid-template-columns:1fr 1fr}
+.r3{grid-template-columns:1fr 1fr 1fr}
+.r12{grid-template-columns:1fr 2fr}
+.r21{grid-template-columns:2fr 1fr}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 20px 16px}
+.card-title{font-family:'Instrument Serif',serif;font-size:17px;font-style:italic;color:var(--text);margin-bottom:2px}
+.card-desc{font-size:10.5px;color:var(--muted);margin-bottom:14px}
+.insight{margin-top:12px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:8px 12px;font-size:11px;color:var(--text);line-height:1.6}
+.insight.teal{border-left-color:var(--teal)}.insight.gold{border-left-color:var(--gold)}.insight.blue{border-left-color:var(--blue)}
+.insight b{color:var(--accent)}.insight.teal b{color:var(--teal)}.insight.gold b{color:var(--gold)}.insight.blue b{color:var(--blue)}
+.bar-list{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:flex;flex-direction:column;gap:3px}
+.bar-meta{display:flex;justify-content:space-between}
+.bar-name{font-size:11.5px;color:var(--text)}
+.bar-ct{font-size:10.5px;color:var(--muted)}
+.bar-track{height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;transition:width .6s ease}
+.stack-list{display:flex;flex-direction:column;gap:9px}
+.stack-row{display:flex;flex-direction:column;gap:3px}
+.stack-lbl-row{display:flex;justify-content:space-between}
+.stack-lbl{font-size:11px;color:var(--text)}
+.stack-total{font-size:10px;color:var(--muted)}
+.stack-bar{display:flex;height:18px;border-radius:5px;overflow:hidden;gap:1px}
+.stack-seg{display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:600;color:rgba(255,255,255,.9);overflow:hidden;min-width:0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.leg{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)}
+.leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.bubble-grid{display:flex;flex-wrap:wrap;gap:5px;max-height:280px;overflow-y:auto;padding:2px}
+.bubble-grid::-webkit-scrollbar{width:3px}
+.bubble-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.bubble{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;cursor:default;transition:transform .15s;border:2px solid transparent;color:#fff;position:relative}
+.bubble:hover{transform:scale(1.25);z-index:10}
+.bubble[title]:hover::after{content:attr(title);position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-size:9px;white-space:nowrap;padding:3px 7px;border-radius:4px;pointer-events:none;font-family:'Geist Mono',monospace}
+.org-list{display:flex;flex-direction:column;gap:8px}
+.org-mgr{background:var(--surface2);border-radius:8px;padding:10px 12px}
+.org-mgr-name{font-family:'Instrument Serif',serif;font-size:14px;font-style:italic;color:var(--text);margin-bottom:5px}
+.org-reports{display:flex;flex-wrap:wrap;gap:4px}
+.org-chip{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:10px;color:var(--muted)}
+.sec{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);display:flex;align-items:center;gap:10px;margin:20px 0 12px}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+.empty{color:var(--muted);font-size:12px;padding:20px 0;text-align:center}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card,.kpi,.banner{animation:up .45s ease both}
+.kpi:nth-child(1){animation-delay:.04s}.kpi:nth-child(2){animation-delay:.08s}
+.kpi:nth-child(3){animation-delay:.12s}.kpi:nth-child(4){animation-delay:.16s}
+.kpi:nth-child(5){animation-delay:.2s}.kpi:nth-child(6){animation-delay:.24s}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Cambio AI <span>People</span></div>
+    <div class="hdr-sub">Workforce Intelligence · Census Report · March 2026</div>
+  </div>
+  <div class="hdr-meta">
+    <div class="live">● Live filters active</div>
+    <div class="hdr-count" id="activeCount">53</div>
+    <div>employees shown</div>
+  </div>
+</div>
+
+<div class="banner good" style="animation-delay:.05s">
+  <div class="banner-icon">✓</div>
+  <div><strong>Complete demographic data</strong> — race/ethnicity and gender collected for all 53 employees in this dataset, enabling full DEI analysis.</div>
+</div>
+<div class="banner warn" style="animation-delay:.1s">
+  <div class="banner-icon">!</div>
+  <div><strong>Data note:</strong> "KW hub" and "KW Hub" merged as <em>KW Hub</em>. Pronouns missing for all employees — consider adding for the next census cycle.</div>
+</div>
+
+<div class="filter-bar">
+  <div class="filter-group">
+    <label>Hub</label>
+    <select id="fHub" onchange="applyFilters()">
+      <option value="">All Hubs</option>
+      <option>NYC Hub</option><option>KW Hub</option><option>SF Hub</option>
+      <option>Toronto Hub</option><option>London Hub</option><option>Remote</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Department</label>
+    <select id="fDept" onchange="applyFilters()">
+      <option value="">All Departments</option>
+      <option>Engineering</option><option>Partner Strategy</option>
+      <option>Business Development</option><option>Building Science</option>
+      <option>Operations</option><option>Executive</option>
+      <option>Product Design</option><option>Product Management</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Gender</label>
+    <select id="fGender" onchange="applyFilters()">
+      <option value="">All Genders</option>
+      <option>Male</option><option>Female</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Race / Ethnicity</label>
+    <select id="fRace" onchange="applyFilters()">
+      <option value="">All</option>
+      <option>White</option><option>Asian</option>
+      <option>Hispanic/Latino</option><option>Black</option><option>Mixed Race</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Tenure</label>
+    <select id="fTenure" onchange="applyFilters()">
+      <option value="">All Tenure</option>
+      <option value="< 6 months">&lt; 6 months</option>
+      <option value="6–12 months">6–12 months</option>
+      <option value="1–2 years">1–2 years</option>
+      <option value="2+ years">2+ years</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label>Employment Type</label>
+    <select id="fType" onchange="applyFilters()">
+      <option value="">All Types</option>
+      <option value="Full Time Employee">Full Time</option>
+      <option value="Employee Eor">EOR</option>
+      <option value="International Contractor">Contractor</option>
+    </select>
+  </div>
+  <button class="filter-reset" onclick="resetFilters()">Reset</button>
+  <div class="filter-active" id="filterLabel" style="display:none">● Filters active</div>
+</div>
+
+<div class="kpi-row" style="grid-template-columns:repeat(7,1fr)">
+  <div class="kpi" style="--kpi-color:var(--accent)"><div class="kpi-bar"></div><div class="kpi-label">Shown / Total</div><div class="kpi-val"><span id="kHead">53</span><span style="font-size:20px;color:var(--muted)"> /53</span></div><div class="kpi-detail" id="kHeadPct"><b>100%</b> of active</div></div>
+  <div class="kpi" style="--kpi-color:var(--c-female)"><div class="kpi-bar"></div><div class="kpi-label">Female</div><div class="kpi-val" id="kFemale">22</div><div class="kpi-detail" id="kFpct"><b>41%</b> of shown</div></div>
+  <div class="kpi" style="--kpi-color:var(--c-male)"><div class="kpi-bar"></div><div class="kpi-label">Male</div><div class="kpi-val" id="kMale">31</div><div class="kpi-detail" id="kMpct"><b>58%</b> of shown</div></div>
+  <div class="kpi" style="--kpi-color:var(--c-white)"><div class="kpi-bar"></div><div class="kpi-label">White</div><div class="kpi-val" id="kWhite">24</div><div class="kpi-detail" id="kWpct"><b>45%</b> of shown</div></div>
+  <div class="kpi" style="--kpi-color:var(--c-asian)"><div class="kpi-bar"></div><div class="kpi-label">Asian</div><div class="kpi-val" id="kAsian">18</div><div class="kpi-detail" id="kApct"><b>34%</b> of shown</div></div>
+  <div class="kpi" style="--kpi-color:var(--c-hisp)"><div class="kpi-bar"></div><div class="kpi-label">Hispanic/Latino</div><div class="kpi-val" id="kHisp">6</div><div class="kpi-detail" id="kHpct"><b>11%</b> of shown</div></div>
+  <div class="kpi" style="--kpi-color:var(--t1)"><div class="kpi-bar"></div><div class="kpi-label">New (&lt;6mo)</div><div class="kpi-val" id="kNew">24</div><div class="kpi-detail" id="kNpct"><b>45%</b> of shown</div></div>
+</div>
+
+<div class="sec">Overall Race &amp; Ethnicity</div>
+<div class="row r2">
+  <div class="card">
+    <div class="card-title">Race & Ethnicity — All Employees</div>
+    <div class="card-desc">Counts and % of total active headcount (53) · updates with filters</div>
+    <div class="bar-list" id="raceOverviewBars"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Overall Tenure</div>
+    <div class="card-desc">How long employees have been at Cambio · updates with filters</div>
+    <div class="bar-list" id="tenureOverviewBars"></div>
+  </div>
+</div>
+
+<div class="sec">Gender &amp; Race by Hub</div>
+<div class="row r2">
+  <div class="card">
+    <div class="card-title">Gender by Hub</div>
+    <div class="card-desc">Share of each hub that is Female vs. Male</div>
+    <div class="stack-list" id="genderByHub"></div>
+    <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-female)"></div>Female</div><div class="leg"><div class="leg-dot" style="background:var(--c-male)"></div>Male</div></div>
+    <div class="insight"><b>KW Hub is 91% Male</b> (10 of 11) — the most gender-skewed hub. NYC Hub is the most balanced at <b>55% Female</b>. All Remote employees are Male.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Race by Hub</div>
+    <div class="card-desc">Ethnic composition per hub</div>
+    <div class="stack-list" id="raceByHub"></div>
+    <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-white)"></div>White</div><div class="leg"><div class="leg-dot" style="background:var(--c-asian)"></div>Asian</div><div class="leg"><div class="leg-dot" style="background:var(--c-hisp)"></div>Hispanic/Latino</div><div class="leg"><div class="leg-dot" style="background:var(--c-black)"></div>Black</div><div class="leg"><div class="leg-dot" style="background:var(--c-mixed)"></div>Mixed</div></div>
+    <div class="insight teal"><b>KW Hub is 64% Asian.</b> London Hub is 100% White. NYC Hub is the most diverse hub. Black employees are split between KW and SF.</div>
+  </div>
+</div>
+
+<div class="sec">Department Breakdown</div>
+<div class="row r2">
+  <div class="card">
+    <div class="card-title">Gender by Department</div>
+    <div class="card-desc">Female / Male share per team</div>
+    <div class="stack-list" id="genderByDept"></div>
+    <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-female)"></div>Female</div><div class="leg"><div class="leg-dot" style="background:var(--c-male)"></div>Male</div></div>
+    <div class="insight"><b>Engineering is 88% Male</b> — largest gender gap. Executive, Product Design &amp; Operations are Female-majority. Building Science &amp; Biz Dev are 50/50.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Race by Department</div>
+    <div class="card-desc">Ethnic composition per team</div>
+    <div class="stack-list" id="raceByDept"></div>
+    <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-white)"></div>White</div><div class="leg"><div class="leg-dot" style="background:var(--c-asian)"></div>Asian</div><div class="leg"><div class="leg-dot" style="background:var(--c-hisp)"></div>Hispanic/Latino</div><div class="leg"><div class="leg-dot" style="background:var(--c-black)"></div>Black</div><div class="leg"><div class="leg-dot" style="background:var(--c-mixed)"></div>Mixed</div></div>
+    <div class="insight gold"><b>Building Science &amp; Biz Dev are 100% White.</b> Engineering has the most diversity (47% Asian, 24% Black). Partner Strategy has 27% Hispanic/Latino.</div>
+  </div>
+</div>
+
+<div class="sec">Tenure &amp; Age</div>
+<div class="row r2">
+  <div class="card">
+    <div class="card-title">Tenure by Department</div>
+    <div class="card-desc">How long each team has been at Cambio</div>
+    <div class="stack-list" id="tenureByDept"></div>
+    <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--t1)"></div>&lt;6mo</div><div class="leg"><div class="leg-dot" style="background:var(--t2)"></div>6–12mo</div><div class="leg"><div class="leg-dot" style="background:var(--t3)"></div>1–2yr</div><div class="leg"><div class="leg-dot" style="background:var(--t4)"></div>2+yr</div></div>
+    <div class="insight blue"><b>Executive team is 100% tenured (2+ years).</b> Engineering is 53% new hires. All "Unknown dept" employees are brand new — likely still onboarding.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Age Distribution</div>
+    <div class="card-desc">Generational breakdown across filtered employees</div>
+    <div style="height:185px;position:relative"><canvas id="ageChart"></canvas></div>
+    <div class="insight"><b>68% of the team is 30–39.</b> No employees are over 50. The team is overwhelmingly Millennial with significant Gen Z representation (17%) and almost no Gen X leadership.</div>
+  </div>
+</div>
+
+<div class="sec">Reporting Structure</div>
+<div class="row">
+  <div class="card">
+    <div class="card-title">Reporting Structure</div>
+    <div class="card-desc">Managers &amp; their direct reports</div>
+    <div class="org-list" id="orgList"></div>
+  </div>
+</div>
+
+<div class="sec">Hub &amp; Employment</div>
+<div class="row r2">
+  <div class="card">
+    <div class="card-title">Headcount by Hub</div>
+    <div class="card-desc">Geographic distribution of team</div>
+    <div class="bar-list" id="hubBars"></div>
+    <div class="insight teal"><b>NYC Hub anchors the company at 41%.</b> KW Hub is the engineering base. SF Hub covers Product. London and Toronto are small pods for commercial teams.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Employment Type</div>
+    <div class="card-desc">FTE · EOR · International Contractor</div>
+    <div style="height:185px;position:relative"><canvas id="empTypeChart"></canvas></div>
+    <div class="insight"><b>33 FTEs (62%)</b> are the core. <b>17 EOR (32%)</b> are mainly Canada-based Engineering. 3 International Contractors span remote locations.</div>
+  </div>
+</div>
+
+
+
+</div>
+<script>
+const RAW=[
+  {name:"Albert O'Connor",gender:"Male",race:"White",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"40–49",type:"Employee Eor",manager:"Leon Chen",title:"Staff Software Engineer"},
+  {name:"Alex Scott",gender:"Male",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Stephanie Grayson",title:"Growth Partner"},
+  {name:"Alexa Baglione",gender:"Female",race:"White",dept:"Partner Strategy",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Partner Strategy Lead"},
+  {name:"Alicia Tsai",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Patrice Liang",title:"Senior Backend Engineer"},
+  {name:"Apurva Gupta",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy"},
+  {name:"Brandon Ring",gender:"Male",race:"Black",dept:"Engineering",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Leon Chen",title:"Founding Software Engineer"},
+  {name:"Brent Huchuk",gender:"Male",race:"White",dept:"Building Science",hub:"Toronto Hub",tenure:"2+ years",age:"30–39",type:"Employee Eor",manager:"Leia de Guzman",title:"Founding Data Scientist"},
+  {name:"Cecilia Skarupa",gender:"Female",race:"White",dept:"Building Science",hub:"London Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Zach Alderman",title:"Building Data Scientist"},
+  {name:"Charles Van Tassel",gender:"Male",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Lila Strominger",title:"Senior Product Manager, AI"},
+  {name:"Denise Gorman",gender:"Female",race:"White",dept:"Operations",hub:"NYC Hub",tenure:"< 6 months",age:"40–49",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Executive Assistant"},
+  {name:"Elise Kiland",gender:"Female",race:"White",dept:"Building Science",hub:"SF Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Founding Building Engineer"},
+  {name:"Eric Power",gender:"Male",race:"White",dept:"Engineering",hub:"Remote",tenure:"1–2 years",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Founding Software Engineer"},
+  {name:"Eugenia Ho",gender:"Female",race:"Asian",dept:"Product Design",hub:"SF Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Designer, Senior Design Lead"},
+  {name:"Evan Carberry",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Growth Lead"},
+  {name:"GB Omotosho",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Data Engineer"},
+  {name:"Gianni Cettolo",gender:"Male",race:"Hispanic/Latino",dept:"Product Management",hub:"Remote",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"Lila Strominger",title:"contractor (International)"},
+  {name:"Helen Shek",gender:"Female",race:"Asian",dept:"Product Design",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Eugenia Ho",title:"Senior Product Designer"},
+  {name:"Il Young Chung",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst"},
+  {name:"Jake Morris",gender:"Male",race:"White",dept:"Building Science",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Senior Building Engineer"},
+  {name:"Janessa Choong",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"Toronto Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Tighe Sullivan",title:"Senior Analyst"},
+  {name:"Jay Bassey",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"40–49",type:"Employee Eor",manager:"Patrice Liang",title:"Software Engineer"},
+  {name:"Joel Cesare",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"1–2 years",age:"40–49",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Founding Growth Lead"},
+  {name:"Joshua Frick",gender:"Male",race:"White",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Business Operations Lead"},
+  {name:"Katerina Kaimakamis",gender:"Female",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Stephanie Grayson",title:"European Business Lead"},
+  {name:"Kelly Mark",gender:"Female",race:"White",dept:"Building Science",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Building Engineer"},
+  {name:"Laura Willett",gender:"Female",race:"White",dept:"Partner Strategy",hub:"Toronto Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Stephanie Grayson",title:"Senior Partner Strategy Lead"},
+  {name:"Leia de Guzman",gender:"Female",race:"Asian",dept:"Executive",hub:"SF Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"",title:"Co-founder & Co-CEO"},
+  {name:"Leon Chen",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"2+ years",age:"40–49",type:"Employee Eor",manager:"Leia de Guzman",title:"Head of Technology"},
+  {name:"Lila Strominger",gender:"Female",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Product Lead"},
+  {name:"Lily Haynes",gender:"Female",race:"White",dept:"Partner Strategy",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst, Partner Strategy"},
+  {name:"Lizzie Leon",gender:"Female",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Head of Product Innovation"},
+  {name:"Lorenzo Cardenas",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Partner Strategy Lead"},
+  {name:"Lucas Camargo de Camargo Silva",gender:"Male",race:"Hispanic/Latino",dept:"Engineering",hub:"KW Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Backend Engineer"},
+  {name:"Maranatha Ilesanmi",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
+  {name:"Matthew Lobach",gender:"Male",race:"White",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Head of Partner Operations and Strategy"},
+  {name:"Megan Bayagich",gender:"Female",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Growth Lead"},
+  {name:"Mikey Abela",gender:"Male",race:"White",dept:"Engineering",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Patrice Liang",title:"Software Engineer"},
+  {name:"Nachiketa Rajpurohit",gender:"Male",race:"Asian",dept:"Engineering",hub:"SF Hub",tenure:"< 6 months",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"AI Engineer, Lead"},
+  {name:"Nathalie Rodriguez",gender:"Female",race:"Hispanic/Latino",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Talent and HR Lead"},
+  {name:"Noah Grant",gender:"Male",race:"White",dept:"Engineering",hub:"Remote",tenure:"2+ years",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"Founding Software Engineer"},
+  {name:"Noel George",gender:"Male",race:"Asian",dept:"Unknown",hub:"KW Hub",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"",title:"contractor (International)"},
+  {name:"Pao Delos Reyes",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst, Partner Strategy"},
+  {name:"Patrice Liang",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Leon Chen",title:"Engineering Manager"},
+  {name:"Richie Vasquez Jr",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Data Analyst"},
+  {name:"Sarah Yoon",gender:"Female",race:"Asian",dept:"Unknown",hub:"KW Hub",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"",title:"contractor (International)"},
+  {name:"Stephanie Grayson",gender:"Female",race:"Hispanic/Latino",dept:"Executive",hub:"NYC Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"",title:"Co-founder & Co-CEO"},
+  {name:"Sultan .",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
+  {name:"Tighe Sullivan",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Founding CS Lead Manager, Partner Strategy"},
+  {name:"Tom Kelly",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"1–2 years",age:"30–39",type:"Employee Eor",manager:"Patrice Liang",title:"Founding Backend Engineer"},
+  {name:"Victor Zhong",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Software Engineer"},
+  {name:"Vishal Upadhyay",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
+  {name:"Ximena Sosa Chavez",gender:"Female",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy"},
+  {name:"Zach Alderman",gender:"Male",race:"White",dept:"Building Science",hub:"Remote",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Building Engineer"},
+];
+
+const RC={"White":"#8a8278","Asian":"#2a7c6f","Hispanic/Latino":"#b8860b","Black":"#c85a2a","Mixed Race":"#6b3fa0"};
+const GC={"Female":"#c85a2a","Male":"#2a4a8c"};
+const TC={"< 6 months":"#e85d42","6–12 months":"#e8a642","1–2 years":"#42a8e8","2+ years":"#2a7c6f"};
+const HUBS=["NYC Hub","KW Hub","SF Hub","Toronto Hub","London Hub","Remote"];
+const DEPTS=["Engineering","Partner Strategy","Business Development","Building Science","Operations","Executive","Product Design","Product Management","Unknown"];
+const RACE_ORDER=["White","Asian","Hispanic/Latino","Black","Mixed Race"];
+const GENDER_ORDER=["Female","Male"];
+const TENURE_ORDER=["< 6 months","6–12 months","1–2 years","2+ years"];
+
+let filtered=[...RAW];
+let ageChart=null,empChart=null;
+
+function cnt(arr,key){const c={};arr.forEach(r=>{const v=r[key]||'Unknown';c[v]=(c[v]||0)+1});return c}
+function pct(v,n){return n?Math.round(v/n*100):0}
+
+function segs(tally,colorMap,order){
+  const total=Object.values(tally).reduce((a,b)=>a+b,0);
+  if(!total)return'';
+  return order.filter(k=>tally[k]).map(k=>{
+    const p=Math.round((tally[k]||0)/total*100);
+    if(!p)return'';
+    return`<div class="stack-seg" style="flex:${tally[k]};background:${colorMap[k]||'#ccc'}">${p>9?p+'%':''}</div>`;
+  }).join('');
+}
+
+function stackSection(containerId,groups,groupFn,dim,colorMap,order){
+  const el=document.getElementById(containerId);
+  el.innerHTML='';
+  groups.forEach(g=>{
+    const rows=filtered.filter(r=>groupFn(r)===g);
+    if(!rows.length)return;
+    const t=cnt(rows,dim);
+    const s=segs(t,colorMap,order);
+    if(!s)return;
+    el.innerHTML+=`<div class="stack-row"><div class="stack-lbl-row"><span class="stack-lbl">${g}</span><span class="stack-total">${rows.length}</span></div><div class="stack-bar">${s}</div></div>`;
+  });
+}
+
+function render(){
+  const n=filtered.length;
+  document.getElementById('activeCount').textContent=n;
+  const gc=cnt(filtered,'gender'),rc=cnt(filtered,'race'),tc=cnt(filtered,'tenure');
+  const TOTAL=RAW.length;
+  document.getElementById('kHead').textContent=n;
+  document.getElementById('kHeadPct').innerHTML=`<b>${pct(n,TOTAL)}%</b> of active`;
+  document.getElementById('kFemale').textContent=gc['Female']||0;
+  document.getElementById('kFpct').innerHTML=`<b>${pct(gc['Female']||0,n)}%</b> of shown`;
+  document.getElementById('kMale').textContent=gc['Male']||0;
+  document.getElementById('kMpct').innerHTML=`<b>${pct(gc['Male']||0,n)}%</b> of shown`;
+  document.getElementById('kWhite').textContent=rc['White']||0;
+  document.getElementById('kWpct').innerHTML=`<b>${pct(rc['White']||0,n)}%</b> of shown`;
+  document.getElementById('kAsian').textContent=rc['Asian']||0;
+  document.getElementById('kApct').innerHTML=`<b>${pct(rc['Asian']||0,n)}%</b> of shown`;
+  document.getElementById('kHisp').textContent=rc['Hispanic/Latino']||0;
+  document.getElementById('kHpct').innerHTML=`<b>${pct(rc['Hispanic/Latino']||0,n)}%</b> of shown`;
+  document.getElementById('kNew').textContent=tc['< 6 months']||0;
+  document.getElementById('kNpct').innerHTML=`<b>${pct(tc['< 6 months']||0,n)}%</b> of shown`;
+
+  // Race overview bars
+  const rob=document.getElementById('raceOverviewBars');
+  rob.innerHTML='';
+  const raceColors={"White":"#8a8278","Asian":"#2a7c6f","Hispanic/Latino":"#b8860b","Black":"#c85a2a","Mixed Race":"#6b3fa0"};
+  const maxR=Math.max(...RACE_ORDER.map(r=>rc[r]||0),1);
+  RACE_ORDER.forEach(r=>{
+    const c=rc[r]||0;
+    if(!c)return;
+    rob.innerHTML+=`<div class="bar-row"><div class="bar-meta"><span class="bar-name">${r}</span><span class="bar-ct">${c} · <b style="color:${raceColors[r]}">${pct(c,n)}% of shown</b> · ${pct(c,TOTAL)}% of total</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxR*100}%;background:${raceColors[r]}"></div></div></div>`;
+  });
+
+  // Tenure overview bars
+  const tob=document.getElementById('tenureOverviewBars');
+  tob.innerHTML='';
+  const tenureColors={"< 6 months":"#e85d42","6–12 months":"#e8a642","1–2 years":"#42a8e8","2+ years":"#2a7c6f"};
+  const maxT=Math.max(...TENURE_ORDER.map(t=>tc[t]||0),1);
+  TENURE_ORDER.forEach(t=>{
+    const c=tc[t]||0;
+    if(!c)return;
+    tob.innerHTML+=`<div class="bar-row"><div class="bar-meta"><span class="bar-name">${t}</span><span class="bar-ct">${c} · <b style="color:${tenureColors[t]}">${pct(c,n)}% of shown</b> · ${pct(c,TOTAL)}% of total</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxT*100}%;background:${tenureColors[t]}"></div></div></div>`;
+  });
+
+  stackSection('genderByHub',HUBS,r=>r.hub,'gender',GC,GENDER_ORDER);
+  stackSection('raceByHub',HUBS,r=>r.hub,'race',RC,RACE_ORDER);
+  stackSection('genderByDept',DEPTS,r=>r.dept,'gender',GC,GENDER_ORDER);
+  stackSection('raceByDept',DEPTS,r=>r.dept,'race',RC,RACE_ORDER);
+  stackSection('tenureByDept',DEPTS,r=>r.dept,'tenure',TC,TENURE_ORDER);
+
+  // Hub bars
+  const hb=document.getElementById('hubBars');
+  hb.innerHTML='';
+  const hubColors={"NYC Hub":"#c85a2a","KW Hub":"#2a7c6f","SF Hub":"#2a4a8c","Toronto Hub":"#b8860b","London Hub":"#6b3fa0","Remote":"#8a8278"};
+  const maxH=Math.max(...HUBS.map(h=>filtered.filter(r=>r.hub===h).length),1);
+  HUBS.forEach(h=>{
+    const c=filtered.filter(r=>r.hub===h).length;
+    if(!c)return;
+    hb.innerHTML+=`<div class="bar-row"><div class="bar-meta"><span class="bar-name">${h}</span><span class="bar-ct">${c} · ${pct(c,n)}%</span></div><div class="bar-track"><div class="bar-fill" style="width:${c/maxH*100}%;background:${hubColors[h]||'#888'}"></div></div></div>`;
+  });
+
+  if(!filtered.length) return;
+
+  // Org
+  const ol=document.getElementById('orgList');
+  ol.innerHTML='';
+  const mgrs={};
+  filtered.forEach(r=>{if(r.manager){if(!mgrs[r.manager])mgrs[r.manager]=[];mgrs[r.manager].push(r.name)}});
+  const mo=['Leia de Guzman','Stephanie Grayson','Leon Chen','Matthew Lobach','Tighe Sullivan','Lila Strominger','Zach Alderman','Eugenia Ho'];
+  [...mo,...Object.keys(mgrs).filter(m=>!mo.includes(m))].forEach(m=>{
+    if(!mgrs[m]||!mgrs[m].length)return;
+    ol.innerHTML+=`<div class="org-mgr"><div class="org-mgr-name">${m} <span style="font-family:'Geist Mono';font-size:10px;color:var(--muted);font-style:normal">(${mgrs[m].length})</span></div><div class="org-reports">${mgrs[m].map(nm=>`<div class="org-chip">${nm}</div>`).join('')}</div></div>`;
+  });
+
+  // Age chart
+  const ac=cnt(filtered,'age');
+  const ageOrder=['Under 30','30–39','40–49','50+'];
+  if(ageChart)ageChart.destroy();
+  ageChart=new Chart(document.getElementById('ageChart'),{
+    type:'bar',
+    data:{labels:ageOrder,datasets:[{data:ageOrder.map(k=>ac[k]||0),backgroundColor:['#e85d42','#2a4a8c','#2a7c6f','#b8860b'],borderRadius:6,borderSkipped:false}]},
+    options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#e2ddd6'},ticks:{font:{family:'Geist Mono',size:10}}},x:{grid:{display:false},ticks:{font:{family:'Geist Mono',size:11}}}},animation:{duration:400}}
+  });
+
+  // Emp type
+  const etc=cnt(filtered,'type');
+  if(empChart)empChart.destroy();
+  empChart=new Chart(document.getElementById('empTypeChart'),{
+    type:'doughnut',
+    data:{labels:['Full Time','EOR','Contractor'],datasets:[{data:['Full Time Employee','Employee Eor','International Contractor'].map(k=>etc[k]||0),backgroundColor:['#2a7c6f','#2a4a8c','#b8860b'],borderWidth:3,borderColor:'#ffffff'}]},
+    options:{cutout:'62%',plugins:{legend:{display:true,position:'right',labels:{font:{family:'Geist Mono',size:11},padding:14,boxWidth:11,boxHeight:11}},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}},animation:{duration:400}}
+  });
+}
+
+function applyFilters(){
+  const h=document.getElementById('fHub').value,d=document.getElementById('fDept').value,
+        g=document.getElementById('fGender').value,r=document.getElementById('fRace').value,
+        t=document.getElementById('fTenure').value,tp=document.getElementById('fType').value;
+  filtered=RAW.filter(e=>(!h||e.hub===h)&&(!d||e.dept===d)&&(!g||e.gender===g)&&(!r||e.race===r)&&(!t||e.tenure===t)&&(!tp||e.type===tp));
+  document.getElementById('filterLabel').style.display=(h||d||g||r||t||tp)?'block':'none';
+  render();
+}
+
+function resetFilters(){
+  ['fHub','fDept','fGender','fRace','fTenure','fType'].forEach(id=>{document.getElementById(id).value=''});
+  filtered=[...RAW];
+  document.getElementById('filterLabel').style.display='none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
