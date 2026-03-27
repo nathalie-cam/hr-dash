@@ -9,13 +9,13 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f5f3ee;--surface:#ffffff;--surface2:#f0ede6;--border:#e2ddd6;
-  --text:#1a1714;--muted:#8a8278;
-  --accent:#c85a2a;--accent-lt:#f5e9e3;
-  --teal:#2a7c6f;--gold:#b8860b;--blue:#2a4a8c;--purple:#6b3fa0;
-  --c-asian:#2a7c6f;--c-black:#c85a2a;--c-hisp:#b8860b;--c-mixed:#6b3fa0;--c-white:#8a8278;
-  --c-male:#2a4a8c;--c-female:#c85a2a;
-  --t1:#e85d42;--t2:#e8a642;--t3:#42a8e8;--t4:#2a7c6f;
+  --bg:#f5f5f5;--surface:#ffffff;--surface2:#e8f5f4;--border:#c8dbd9;
+  --text:#0d1b2a;--muted:#6b7280;
+  --accent:#00847D;--accent-lt:#e0f5f4;
+  --teal:#00847D;--gold:#a07800;--blue:#1a5276;--purple:#7c6bb0;
+  --c-asian:#00847D;--c-black:#8b1a2a;--c-hisp:#a07800;--c-mixed:#7c6bb0;--c-white:#6b7280;
+  --c-male:#1a5276;--c-female:#00c4bc;
+  --t1:#8b1a2a;--t2:#a07800;--t3:#00c4bc;--t4:#00847D;
 }
 body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;font-size:13px;line-height:1.5}
 .shell{max-width:1380px;margin:0 auto;padding:32px 28px 80px}
@@ -105,19 +105,11 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
   </div>
   <div class="hdr-meta">
     <div class="live">● Live filters active</div>
-    <div class="hdr-count" id="activeCount">53</div>
+    <div class="hdr-count" id="activeCount">54</div>
     <div>employees shown</div>
   </div>
 </div>
 
-<div class="banner good" style="animation-delay:.05s">
-  <div class="banner-icon">✓</div>
-  <div><strong>Complete demographic data</strong> — race/ethnicity and gender collected for all 53 employees in this dataset, enabling full DEI analysis.</div>
-</div>
-<div class="banner warn" style="animation-delay:.1s">
-  <div class="banner-icon">!</div>
-  <div><strong>Data note:</strong> "KW hub" and "KW Hub" merged as <em>KW Hub</em>. Pronouns missing for all employees — consider adding for the next census cycle.</div>
-</div>
 
 <div class="filter-bar">
   <div class="filter-group">
@@ -177,7 +169,7 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
 </div>
 
 <div class="kpi-row" style="grid-template-columns:repeat(7,1fr)">
-  <div class="kpi" style="--kpi-color:var(--accent)"><div class="kpi-bar"></div><div class="kpi-label">Shown / Total</div><div class="kpi-val"><span id="kHead">53</span><span style="font-size:20px;color:var(--muted)"> /53</span></div><div class="kpi-detail" id="kHeadPct"><b>100%</b> of active</div></div>
+  <div class="kpi" style="--kpi-color:var(--accent)"><div class="kpi-bar"></div><div class="kpi-label">Shown / Total</div><div class="kpi-val"><span id="kHead">54</span><span style="font-size:20px;color:var(--muted)"> /54</span></div><div class="kpi-detail" id="kHeadPct"><b>100%</b> of active</div></div>
   <div class="kpi" style="--kpi-color:var(--c-female)"><div class="kpi-bar"></div><div class="kpi-label">Female</div><div class="kpi-val" id="kFemale">22</div><div class="kpi-detail" id="kFpct"><b>41%</b> of shown</div></div>
   <div class="kpi" style="--kpi-color:var(--c-male)"><div class="kpi-bar"></div><div class="kpi-label">Male</div><div class="kpi-val" id="kMale">31</div><div class="kpi-detail" id="kMpct"><b>58%</b> of shown</div></div>
   <div class="kpi" style="--kpi-color:var(--c-white)"><div class="kpi-bar"></div><div class="kpi-label">White</div><div class="kpi-val" id="kWhite">24</div><div class="kpi-detail" id="kWpct"><b>45%</b> of shown</div></div>
@@ -274,7 +266,7 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
     <div class="card-title">Employment Type</div>
     <div class="card-desc">FTE · EOR · International Contractor</div>
     <div style="height:185px;position:relative"><canvas id="empTypeChart"></canvas></div>
-    <div class="insight"><b>33 FTEs (62%)</b> are the core. <b>17 EOR (32%)</b> are mainly Canada-based Engineering. 3 International Contractors span remote locations.</div>
+    <div class="insight"><b>33 FTEs (61%)</b> are the core. <b>20 EOR (37%)</b> are mainly Canada-based Engineering. 1 International Contractor spans a remote location.</div>
   </div>
 </div>
 
@@ -284,7 +276,7 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
 <script>
 const RAW=[
   {name:"Albert O'Connor",gender:"Male",race:"White",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"40–49",type:"Employee Eor",manager:"Leon Chen",title:"Staff Software Engineer"},
-  {name:"Alex Scott",gender:"Male",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Stephanie Grayson",title:"Growth Partner"},
+  {name:"Alex Scott",gender:"Male",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"John Turner",title:"Growth Partner"},
   {name:"Alexa Baglione",gender:"Female",race:"White",dept:"Partner Strategy",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Partner Strategy Lead"},
   {name:"Alicia Tsai",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Patrice Liang",title:"Senior Backend Engineer"},
   {name:"Apurva Gupta",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy"},
@@ -296,7 +288,7 @@ const RAW=[
   {name:"Elise Kiland",gender:"Female",race:"White",dept:"Building Science",hub:"SF Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Founding Building Engineer"},
   {name:"Eric Power",gender:"Male",race:"White",dept:"Engineering",hub:"Remote",tenure:"1–2 years",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Founding Software Engineer"},
   {name:"Eugenia Ho",gender:"Female",race:"Asian",dept:"Product Design",hub:"SF Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Designer, Senior Design Lead"},
-  {name:"Evan Carberry",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Growth Lead"},
+  {name:"Evan Carberry",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"John Turner",title:"Growth Lead"},
   {name:"GB Omotosho",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Data Engineer"},
   {name:"Gianni Cettolo",gender:"Male",race:"Hispanic/Latino",dept:"Product Management",hub:"Remote",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"Lila Strominger",title:"contractor (International)"},
   {name:"Helen Shek",gender:"Female",race:"Asian",dept:"Product Design",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Eugenia Ho",title:"Senior Product Designer"},
@@ -304,7 +296,7 @@ const RAW=[
   {name:"Jake Morris",gender:"Male",race:"White",dept:"Building Science",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Senior Building Engineer"},
   {name:"Janessa Choong",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"Toronto Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Tighe Sullivan",title:"Senior Analyst"},
   {name:"Jay Bassey",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"40–49",type:"Employee Eor",manager:"Patrice Liang",title:"Software Engineer"},
-  {name:"Joel Cesare",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"1–2 years",age:"40–49",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Founding Growth Lead"},
+  {name:"Joel Cesare",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"1–2 years",age:"40–49",type:"Full Time Employee",manager:"John Turner",title:"Founding Growth Lead"},
   {name:"Joshua Frick",gender:"Male",race:"White",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Business Operations Lead"},
   {name:"Katerina Kaimakamis",gender:"Female",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Stephanie Grayson",title:"European Business Lead"},
   {name:"Kelly Mark",gender:"Female",race:"White",dept:"Building Science",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Building Engineer"},
@@ -318,16 +310,14 @@ const RAW=[
   {name:"Lucas Camargo de Camargo Silva",gender:"Male",race:"Hispanic/Latino",dept:"Engineering",hub:"KW Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Backend Engineer"},
   {name:"Maranatha Ilesanmi",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
   {name:"Matthew Lobach",gender:"Male",race:"White",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Head of Partner Operations and Strategy"},
-  {name:"Megan Bayagich",gender:"Female",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Growth Lead"},
+  {name:"Megan Bayagich",gender:"Female",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"John Turner",title:"Growth Lead"},
   {name:"Mikey Abela",gender:"Male",race:"White",dept:"Engineering",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Patrice Liang",title:"Software Engineer"},
   {name:"Nachiketa Rajpurohit",gender:"Male",race:"Asian",dept:"Engineering",hub:"SF Hub",tenure:"< 6 months",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"AI Engineer, Lead"},
   {name:"Nathalie Rodriguez",gender:"Female",race:"Hispanic/Latino",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Talent and HR Lead"},
   {name:"Noah Grant",gender:"Male",race:"White",dept:"Engineering",hub:"Remote",tenure:"2+ years",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"Founding Software Engineer"},
-  {name:"Noel George",gender:"Male",race:"Asian",dept:"Unknown",hub:"KW Hub",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"",title:"contractor (International)"},
   {name:"Pao Delos Reyes",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst, Partner Strategy"},
   {name:"Patrice Liang",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Leon Chen",title:"Engineering Manager"},
   {name:"Richie Vasquez Jr",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Data Analyst"},
-  {name:"Sarah Yoon",gender:"Female",race:"Asian",dept:"Unknown",hub:"KW Hub",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"",title:"contractor (International)"},
   {name:"Stephanie Grayson",gender:"Female",race:"Hispanic/Latino",dept:"Executive",hub:"NYC Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"",title:"Co-founder & Co-CEO"},
   {name:"Sultan .",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
   {name:"Tighe Sullivan",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Founding CS Lead Manager, Partner Strategy"},
@@ -336,11 +326,14 @@ const RAW=[
   {name:"Vishal Upadhyay",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer"},
   {name:"Ximena Sosa Chavez",gender:"Female",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy"},
   {name:"Zach Alderman",gender:"Male",race:"White",dept:"Building Science",hub:"Remote",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Building Engineer"},
+  {name:"Siting Ban",gender:"Female",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Software Engineer"},
+  {name:"Jessica Matthys",gender:"Female",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Lila Strominger",title:"Product Manager"},
+  {name:"John Turner",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Business Development Lead"},
 ];
 
-const RC={"White":"#8a8278","Asian":"#2a7c6f","Hispanic/Latino":"#b8860b","Black":"#c85a2a","Mixed Race":"#6b3fa0"};
-const GC={"Female":"#c85a2a","Male":"#2a4a8c"};
-const TC={"< 6 months":"#e85d42","6–12 months":"#e8a642","1–2 years":"#42a8e8","2+ years":"#2a7c6f"};
+const RC={"White":"#6b7280","Asian":"#00847D","Hispanic/Latino":"#a07800","Black":"#8b1a2a","Mixed Race":"#7c6bb0"};
+const GC={"Female":"#00c4bc","Male":"#1a5276"};
+const TC={"< 6 months":"#8b1a2a","6–12 months":"#a07800","1–2 years":"#00c4bc","2+ years":"#00847D"};
 const HUBS=["NYC Hub","KW Hub","SF Hub","Toronto Hub","London Hub","Remote"];
 const DEPTS=["Engineering","Partner Strategy","Business Development","Building Science","Operations","Executive","Product Design","Product Management","Unknown"];
 const RACE_ORDER=["White","Asian","Hispanic/Latino","Black","Mixed Race"];
@@ -399,7 +392,7 @@ function render(){
   // Race overview bars
   const rob=document.getElementById('raceOverviewBars');
   rob.innerHTML='';
-  const raceColors={"White":"#8a8278","Asian":"#2a7c6f","Hispanic/Latino":"#b8860b","Black":"#c85a2a","Mixed Race":"#6b3fa0"};
+  const raceColors={"White":"#6b7280","Asian":"#00847D","Hispanic/Latino":"#a07800","Black":"#8b1a2a","Mixed Race":"#7c6bb0"};
   const maxR=Math.max(...RACE_ORDER.map(r=>rc[r]||0),1);
   RACE_ORDER.forEach(r=>{
     const c=rc[r]||0;
@@ -410,7 +403,7 @@ function render(){
   // Tenure overview bars
   const tob=document.getElementById('tenureOverviewBars');
   tob.innerHTML='';
-  const tenureColors={"< 6 months":"#e85d42","6–12 months":"#e8a642","1–2 years":"#42a8e8","2+ years":"#2a7c6f"};
+  const tenureColors={"< 6 months":"#8b1a2a","6–12 months":"#a07800","1–2 years":"#00c4bc","2+ years":"#00847D"};
   const maxT=Math.max(...TENURE_ORDER.map(t=>tc[t]||0),1);
   TENURE_ORDER.forEach(t=>{
     const c=tc[t]||0;
@@ -427,7 +420,7 @@ function render(){
   // Hub bars
   const hb=document.getElementById('hubBars');
   hb.innerHTML='';
-  const hubColors={"NYC Hub":"#c85a2a","KW Hub":"#2a7c6f","SF Hub":"#2a4a8c","Toronto Hub":"#b8860b","London Hub":"#6b3fa0","Remote":"#8a8278"};
+  const hubColors={"NYC Hub":"#00847D","KW Hub":"#00c4bc","SF Hub":"#1a5276","Toronto Hub":"#a07800","London Hub":"#7c6bb0","Remote":"#6b7280"};
   const maxH=Math.max(...HUBS.map(h=>filtered.filter(r=>r.hub===h).length),1);
   HUBS.forEach(h=>{
     const c=filtered.filter(r=>r.hub===h).length;
@@ -442,7 +435,7 @@ function render(){
   ol.innerHTML='';
   const mgrs={};
   filtered.forEach(r=>{if(r.manager){if(!mgrs[r.manager])mgrs[r.manager]=[];mgrs[r.manager].push(r.name)}});
-  const mo=['Leia de Guzman','Stephanie Grayson','Leon Chen','Matthew Lobach','Tighe Sullivan','Lila Strominger','Zach Alderman','Eugenia Ho'];
+  const mo=['Leia de Guzman','Stephanie Grayson','Leon Chen','Matthew Lobach','Tighe Sullivan','Lila Strominger','Zach Alderman','Eugenia Ho','John Turner','Patrice Liang'];
   [...mo,...Object.keys(mgrs).filter(m=>!mo.includes(m))].forEach(m=>{
     if(!mgrs[m]||!mgrs[m].length)return;
     ol.innerHTML+=`<div class="org-mgr"><div class="org-mgr-name">${m} <span style="font-family:'Geist Mono';font-size:10px;color:var(--muted);font-style:normal">(${mgrs[m].length})</span></div><div class="org-reports">${mgrs[m].map(nm=>`<div class="org-chip">${nm}</div>`).join('')}</div></div>`;
@@ -454,8 +447,8 @@ function render(){
   if(ageChart)ageChart.destroy();
   ageChart=new Chart(document.getElementById('ageChart'),{
     type:'bar',
-    data:{labels:ageOrder,datasets:[{data:ageOrder.map(k=>ac[k]||0),backgroundColor:['#e85d42','#2a4a8c','#2a7c6f','#b8860b'],borderRadius:6,borderSkipped:false}]},
-    options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#e2ddd6'},ticks:{font:{family:'Geist Mono',size:10}}},x:{grid:{display:false},ticks:{font:{family:'Geist Mono',size:11}}}},animation:{duration:400}}
+    data:{labels:ageOrder,datasets:[{data:ageOrder.map(k=>ac[k]||0),backgroundColor:['#8b1a2a','#00847D','#00c4bc','#a07800'],borderRadius:6,borderSkipped:false}]},
+    options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:'#c8dbd9'},ticks:{font:{family:'Geist Mono',size:10}}},x:{grid:{display:false},ticks:{font:{family:'Geist Mono',size:11}}}},animation:{duration:400}}
   });
 
   // Emp type
@@ -463,7 +456,7 @@ function render(){
   if(empChart)empChart.destroy();
   empChart=new Chart(document.getElementById('empTypeChart'),{
     type:'doughnut',
-    data:{labels:['Full Time','EOR','Contractor'],datasets:[{data:['Full Time Employee','Employee Eor','International Contractor'].map(k=>etc[k]||0),backgroundColor:['#2a7c6f','#2a4a8c','#b8860b'],borderWidth:3,borderColor:'#ffffff'}]},
+    data:{labels:['Full Time','EOR','Contractor'],datasets:[{data:['Full Time Employee','Employee Eor','International Contractor'].map(k=>etc[k]||0),backgroundColor:['#00847D','#00c4bc','#a07800'],borderWidth:3,borderColor:'#ffffff'}]},
     options:{cutout:'62%',plugins:{legend:{display:true,position:'right',labels:{font:{family:'Geist Mono',size:11},padding:14,boxWidth:11,boxHeight:11}},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw}`}}},animation:{duration:400}}
   });
 }
