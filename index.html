@@ -105,7 +105,7 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
   </div>
   <div class="hdr-meta">
     <div class="live">● Live filters active</div>
-    <div class="hdr-count" id="activeCount">54</div>
+    <div class="hdr-count" id="activeCount">52</div>
     <div>employees shown</div>
   </div>
 </div>
@@ -168,7 +168,7 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
 </div>
 
 <div class="kpi-row" style="grid-template-columns:repeat(7,1fr)">
-  <div class="kpi" style="--kpi-color:var(--accent)"><div class="kpi-bar"></div><div class="kpi-label">Shown / Total</div><div class="kpi-val"><span id="kHead">53</span><span style="font-size:20px;color:var(--muted)"> /54</span></div><div class="kpi-detail" id="kHeadPct"><b>100%</b> of active</div></div>
+  <div class="kpi" style="--kpi-color:var(--accent)"><div class="kpi-bar"></div><div class="kpi-label">Shown / Total</div><div class="kpi-val"><span id="kHead">52</span><span style="font-size:20px;color:var(--muted)"> /52</span></div><div class="kpi-detail" id="kHeadPct"><b>100%</b> of active</div></div>
   <div class="kpi" style="--kpi-color:var(--c-female)"><div class="kpi-bar"></div><div class="kpi-label">Female</div><div class="kpi-val" id="kFemale">22</div><div class="kpi-detail" id="kFpct"><b>41%</b> of shown</div></div>
   <div class="kpi" style="--kpi-color:var(--c-male)"><div class="kpi-bar"></div><div class="kpi-label">Male</div><div class="kpi-val" id="kMale">31</div><div class="kpi-detail" id="kMpct"><b>58%</b> of shown</div></div>
   <div class="kpi" style="--kpi-color:var(--c-white)"><div class="kpi-bar"></div><div class="kpi-label">White</div><div class="kpi-val" id="kWhite">24</div><div class="kpi-detail" id="kWpct"><b>45%</b> of shown</div></div>
@@ -195,13 +195,11 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
     <div class="card-title">Gender by Hub</div>
     <div class="stack-list" id="genderByHub"></div>
     <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-female)"></div>Female</div><div class="leg"><div class="leg-dot" style="background:var(--c-male)"></div>Male</div></div>
-    <div class="insight"><b>KW Hub is 91% Male</b> (10 of 11) — the most gender-skewed hub. NYC Hub is the most balanced at <b>55% Female</b>. All Remote employees are Male.</div>
   </div>
   <div class="card">
     <div class="card-title">Race by Hub</div>
     <div class="stack-list" id="raceByHub"></div>
     <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-white)"></div>White</div><div class="leg"><div class="leg-dot" style="background:var(--c-asian)"></div>Asian</div><div class="leg"><div class="leg-dot" style="background:var(--c-hisp)"></div>Hispanic/Latino</div><div class="leg"><div class="leg-dot" style="background:var(--c-black)"></div>Black</div><div class="leg"><div class="leg-dot" style="background:var(--c-mixed)"></div>Mixed</div></div>
-    <div class="insight teal"><b>KW Hub is 64% Asian.</b> London Hub is 100% White. NYC Hub is the most diverse hub. Black employees are split between KW and SF.</div>
   </div>
 </div>
 
@@ -217,7 +215,6 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
     <div class="card-title">Race by Department</div>
     <div class="stack-list" id="raceByDept"></div>
     <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--c-white)"></div>White</div><div class="leg"><div class="leg-dot" style="background:var(--c-asian)"></div>Asian</div><div class="leg"><div class="leg-dot" style="background:var(--c-hisp)"></div>Hispanic/Latino</div><div class="leg"><div class="leg-dot" style="background:var(--c-black)"></div>Black</div><div class="leg"><div class="leg-dot" style="background:var(--c-mixed)"></div>Mixed</div></div>
-    <div class="insight gold"><b>Building Science &amp; Biz Dev are 100% White.</b> Engineering has the most diversity (47% Asian, 24% Black). Partner Strategy has 27% Hispanic/Latino.</div>
   </div>
 </div>
 
@@ -227,12 +224,10 @@ body{background:var(--bg);color:var(--text);font-family:'Geist Mono',monospace;f
     <div class="card-title">Tenure by Department</div>
     <div class="stack-list" id="tenureByDept"></div>
     <div class="legend"><div class="leg"><div class="leg-dot" style="background:var(--t1)"></div>&lt;6mo</div><div class="leg"><div class="leg-dot" style="background:var(--t2)"></div>6–12mo</div><div class="leg"><div class="leg-dot" style="background:var(--t3)"></div>1–2yr</div><div class="leg"><div class="leg-dot" style="background:var(--t4)"></div>2+yr</div></div>
-    <div class="insight blue"><b>Executive team is 100% tenured (2+ years).</b> Engineering is 53% new hires. All "Unknown dept" employees are brand new — likely still onboarding.</div>
   </div>
   <div class="card">
     <div class="card-title">Age Distribution</div>
     <div style="height:185px;position:relative"><canvas id="ageChart"></canvas></div>
-    <div class="insight"><b>68% of the team is 30–39.</b> No employees are over 50. The team is overwhelmingly Millennial with significant Gen Z representation (17%) and almost no Gen X leadership.</div>
   </div>
 </div>
 
@@ -277,10 +272,10 @@ const RAW=[
   {name:"Alex Scott",gender:"Male",race:"White",dept:"Business Development",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"John Turner",title:"Growth Partner",start:"2025-09-22"},
   {name:"Alexa Baglione",gender:"Female",race:"White",dept:"Partner Strategy",hub:"London Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Partner Strategy Lead",start:"2025-09-22"},
   {name:"Alicia Tsai",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Patrice Liang",title:"Senior Backend Engineer",start:"2025-06-30"},
-  {name:"Apurva Gupta",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy",start:"2024-02-05"},
+  {name:"Apurva Gupta",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Associate, Partner Strategy",start:"2024-02-05"},
   {name:"Brandon Ring",gender:"Male",race:"Black",dept:"Engineering",hub:"SF Hub",tenure:"2+ years",age:"Under 30",type:"Full Time Employee",manager:"Leon Chen",title:"Founding Software Engineer",start:"2022-06-15"},
   {name:"Brent Huchuk",gender:"Male",race:"White",dept:"Building Science",hub:"Toronto Hub",tenure:"2+ years",age:"30–39",type:"Employee Eor",manager:"Leia de Guzman",title:"Founding Data Scientist",start:"2023-08-08"},
-  {name:"Cecilia Skarupa",gender:"Female",race:"White",dept:"Building Science",hub:"London Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Zach Alderman",title:"Building Data Scientist",start:"2025-12-08"},
+  {name:"Cecilia Skarupa",gender:"Female",race:"White",dept:"Product Management",hub:"London Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Lila Strominger",title:"Building Data Scientist",start:"2025-12-08"},
   {name:"Charles Van Tassel",gender:"Male",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Lila Strominger",title:"Senior Product Manager, AI",start:"2025-09-22"},
   {name:"Denise Gorman",gender:"Female",race:"White",dept:"Operations",hub:"NYC Hub",tenure:"< 6 months",age:"40–49",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Executive Assistant",start:"2026-02-09"},
   {name:"Elise Kiland",gender:"Female",race:"White",dept:"Building Science",hub:"SF Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Founding Building Engineer",start:"2025-03-10"},
@@ -290,12 +285,12 @@ const RAW=[
   {name:"GB Omotosho",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Data Engineer",start:"2026-01-12"},
   {name:"Gianni Cettolo",gender:"Male",race:"Hispanic/Latino",dept:"Product Management",hub:"Remote",tenure:"< 6 months",age:"Under 30",type:"International Contractor",manager:"Lila Strominger",title:"contractor (International)",start:"2026-01-03"},
   {name:"Helen Shek",gender:"Female",race:"Asian",dept:"Product Design",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Eugenia Ho",title:"Senior Product Designer",start:"2025-09-22"},
-  {name:"Il Young Chung",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst",start:"2026-03-31"},
+  {name:"Il Young Chung",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Analyst",start:"2026-03-31"},
   {name:"Jake Morris",gender:"Male",race:"White",dept:"Building Science",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Zach Alderman",title:"Senior Building Engineer",start:"2026-01-12"},
   {name:"John Turner",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Business Development Lead",start:"2026-01-15"},
   {name:"Jessica Matthys",gender:"Female",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Lila Strominger",title:"Product Manager",start:"2026-01-15"},
   {name:"Siting Ban",gender:"Female",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Software Engineer",start:"2026-01-15"},
-  {name:"Janessa Choong",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"Toronto Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Tighe Sullivan",title:"Senior Analyst",start:"2025-09-08"},
+  {name:"Janessa Choong",gender:"Female",race:"Asian",dept:"Partner Strategy",hub:"Toronto Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Matthew Lobach",title:"Senior Analyst",start:"2025-09-08"},
   {name:"Jay Bassey",gender:"Male",race:"Black",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"40–49",type:"Employee Eor",manager:"Patrice Liang",title:"Software Engineer",start:"2025-11-24"},
   {name:"Joel Cesare",gender:"Male",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"1–2 years",age:"40–49",type:"Full Time Employee",manager:"John Turner",title:"Founding Growth Lead",start:"2025-03-10"},
   {name:"Joshua Frick",gender:"Male",race:"White",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Business Operations Lead",start:"2025-09-22"},
@@ -305,7 +300,7 @@ const RAW=[
   {name:"Leia de Guzman",gender:"Female",race:"Asian",dept:"Executive",hub:"SF Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"",title:"Co-founder & Co-CEO",start:"2022-06-13"},
   {name:"Leon Chen",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"2+ years",age:"40–49",type:"Employee Eor",manager:"Leia de Guzman",title:"Head of Technology",start:"2022-12-12"},
   {name:"Lila Strominger",gender:"Female",race:"White",dept:"Product Management",hub:"SF Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Product Lead",start:"2025-02-24"},
-  {name:"Lily Haynes",gender:"Female",race:"White",dept:"Partner Strategy",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst, Partner Strategy",start:"2025-09-02"},
+  {name:"Lily Haynes",gender:"Female",race:"White",dept:"Partner Strategy",hub:"NYC Hub",tenure:"6–12 months",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Analyst, Partner Strategy",start:"2025-09-02"},
   {name:"Lizzie Leon",gender:"Female",race:"White",dept:"Business Development",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Stephanie Grayson",title:"Head of Product Innovation",start:"2025-10-27"},
   {name:"Lorenzo Cardenas",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Partner Strategy Lead",start:"2025-10-20"},
   {name:"Lucas Camargo de Camargo Silva",gender:"Male",race:"Hispanic/Latino",dept:"Engineering",hub:"KW Hub",tenure:"6–12 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Backend Engineer",start:"2025-07-16"},
@@ -316,16 +311,14 @@ const RAW=[
   {name:"Nachiketa Rajpurohit",gender:"Male",race:"Asian",dept:"Engineering",hub:"SF Hub",tenure:"< 6 months",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"AI Engineer, Lead",start:"2026-01-12"},
   {name:"Nathalie Rodriguez",gender:"Female",race:"Hispanic/Latino",dept:"Operations",hub:"NYC Hub",tenure:"6–12 months",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Talent and HR Lead",start:"2025-06-09"},
   {name:"Noah Grant",gender:"Male",race:"White",dept:"Engineering",hub:"Remote",tenure:"2+ years",age:"40–49",type:"Full Time Employee",manager:"Leon Chen",title:"Founding Software Engineer",start:"2023-11-27"},
-  {name:"Pao Delos Reyes",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Analyst, Partner Strategy",start:"2026-01-12"},
+  {name:"Pao Delos Reyes",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Analyst, Partner Strategy",start:"2026-01-12"},
   {name:"Patrice Liang",gender:"Female",race:"Asian",dept:"Engineering",hub:"NYC Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Leon Chen",title:"Engineering Manager",start:"2026-01-12"},
-  {name:"Richie Vasquez Jr",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Senior Data Analyst",start:"2026-02-23"},
+  {name:"Richie Vasquez Jr",gender:"Male",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"SF Hub",tenure:"< 6 months",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Senior Data Analyst",start:"2026-02-23"},
   {name:"Stephanie Grayson",gender:"Female",race:"Hispanic/Latino",dept:"Executive",hub:"NYC Hub",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"",title:"Co-founder & Co-CEO",start:"2022-06-13"},
   {name:"Sultan .",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer",start:"2025-12-08"},
-  {name:"Tighe Sullivan",gender:"Male",race:"Asian",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"Under 30",type:"Full Time Employee",manager:"Matthew Lobach",title:"Founding CS Lead Manager, Partner Strategy",start:"2025-03-03"},
   {name:"Tom Kelly",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"1–2 years",age:"30–39",type:"Employee Eor",manager:"Patrice Liang",title:"Founding Backend Engineer",start:"2024-07-15"},
-  {name:"Victor Zhong",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Software Engineer",start:"2025-11-24"},
   {name:"Vishal Upadhyay",gender:"Male",race:"Asian",dept:"Engineering",hub:"KW Hub",tenure:"< 6 months",age:"30–39",type:"Employee Eor",manager:"Leon Chen",title:"Senior Software Engineer",start:"2025-11-03"},
-  {name:"Ximena Sosa Chavez",gender:"Female",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Tighe Sullivan",title:"Associate, Partner Strategy",start:"2025-03-17"},
+  {name:"Ximena Sosa Chavez",gender:"Female",race:"Hispanic/Latino",dept:"Partner Strategy",hub:"NYC Hub",tenure:"1–2 years",age:"30–39",type:"Full Time Employee",manager:"Matthew Lobach",title:"Associate, Partner Strategy",start:"2025-03-17"},
   {name:"Zach Alderman",gender:"Male",race:"White",dept:"Building Science",hub:"Remote",tenure:"2+ years",age:"30–39",type:"Full Time Employee",manager:"Leia de Guzman",title:"Founding Building Engineer",start:"2023-05-30"},
 ];
 
@@ -433,7 +426,7 @@ function render(){
   ol.innerHTML='';
   const mgrs={};
   filtered.forEach(r=>{if(r.manager){if(!mgrs[r.manager])mgrs[r.manager]=[];mgrs[r.manager].push(r.name)}});
-  const mo=['Leia de Guzman','Stephanie Grayson','Leon Chen','Matthew Lobach','Tighe Sullivan','Lila Strominger','Zach Alderman','Eugenia Ho','John Turner','Patrice Liang'];
+  const mo=['Leia de Guzman','Stephanie Grayson','Leon Chen','Matthew Lobach','Lila Strominger','Zach Alderman','Eugenia Ho','John Turner','Patrice Liang'];
   [...mo,...Object.keys(mgrs).filter(m=>!mo.includes(m))].forEach(m=>{
     if(!mgrs[m]||!mgrs[m].length)return;
     const count=mgrs[m].length;
